@@ -1,3 +1,5 @@
+// index.js
+
 const MORSE_TABLE = {
     '.-':     'a',
     '-...':   'b',
@@ -38,9 +40,32 @@ const MORSE_TABLE = {
 };
 
 function decode(expr) {
-    // write your solution here
+    return [...expr]
+        .reduce((a, x, i) => {
+            const j = (i / 10) | 0;
+            a[j] = (a[j] || []).concat(x);
+            return a;
+        }, [])
+        .map((alpha) =>
+            alpha
+                .reduce((a, x, i) => {
+                    const j = (i / 2) | 0;
+                    if (i % 2) {
+                        a[j] = "  .-"[Number.parseInt((a[j] += x), 2) || 0];
+                    } else {
+                        a[j] = [x];
+                    }
+                    return a;
+                }, [])
+                .join("")
+                .trimStart()
+        )
+        .map((x) => MORSE_TABLE[x] || " ")
+        .join("");
 }
 
 module.exports = {
-    decode
-}
+    decode,
+};
+
+//__EOF__
