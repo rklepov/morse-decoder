@@ -1,5 +1,6 @@
 // index.js
 
+// prettier-ignore
 const MORSE_TABLE = {
     '.-':     'a',
     '-...':   'b',
@@ -43,7 +44,7 @@ function decode(expr) {
     return [...expr]
         .reduce((a, x, i) => {
             const j = (i / 10) | 0;
-            a[j] = (a[j] || []).concat(x);
+            a[j] = [...(a[j] || []), x];
             return a;
         }, [])
         .map((alpha) =>
